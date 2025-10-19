@@ -51,5 +51,3 @@ Thumbs.db
 # AWS
 .aws/
 
-#package lock files
-package-lock.json
