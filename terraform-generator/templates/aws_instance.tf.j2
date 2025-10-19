@@ -1,0 +1,10 @@
+provider "aws" {
+  region = "{{ aws.region }}"
+}
+
+{% for instance in aws.instances %}
+resource "aws_instance" "{{ instance.name }}" {
+  ami           = "{{ instance.ami }}"
+  instance_type = "{{ instance.instance_type }}"
+}
+{% endfor %}

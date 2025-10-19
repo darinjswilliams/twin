@@ -1,0 +1,12 @@
+provider "azurerm" {
+  features = {}
+}
+
+{% for vm in azure.vms %}
+resource "azurerm_virtual_machine" "{{ vm.name }}" {
+  name                  = "{{ vm.name }}"
+  location              = "{{ azure.location }}"
+  vm_size               = "{{ vm.size }}"
+  delete_os_disk_on_termination = true
+}
+{% endfor %}

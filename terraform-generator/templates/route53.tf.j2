@@ -1,0 +1,7 @@
+data "aws_route53_zone" "root" {
+  count        = {{ use_custom_domain }} ? 1 : 0
+  name         = "{{ root_domain }}"
+  private_zone = false
+}
+
+resource "aws_acm_certificate" "site"

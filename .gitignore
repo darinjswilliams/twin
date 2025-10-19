@@ -1,0 +1,55 @@
+lambda-deployment.zip
+lambda-package/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.d/
+*.tfvars
+!terraform.tfvars
+!prod.tfvars
+*.tfvars.secret
+
+# Terraform generator
+.terraform-generator/
+
+
+# Lambda packages
+lambda-deployment.zip
+lambda-package/
+
+# Memory storage (contains conversation history)
+memory/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+out/
+.next/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+uv.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# AWS
+.aws/
+
+#package lock files
+package-lock.json

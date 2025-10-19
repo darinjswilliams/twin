@@ -1,0 +1,22 @@
+project_name: sentientops
+environment: dev
+use_custom_domain: false
+root_domain: sentientops.com
+lambda_timeout: 30
+bedrock_model_id: us.amazon.nova-lite-v1
+api_throttle_burst_limit: 1000
+api_throttle_rate_limit: 1000
+
+aws:
+  region: us-east-1
+  instances:
+    - name: ml-server
+      ami: ami-0abcdef1234567890
+      instance_type: t2.micro
+
+azure:
+  location: eastus
+  vms:
+    - name: ml-vm
+      size: Standard_DS1_v2
+      image: UbuntuLTS
