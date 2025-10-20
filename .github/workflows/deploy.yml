@@ -1,4 +1,4 @@
-name: Deploy Digital Twin
+name: Deploy Environment Digital Twin
 
 on:
   push:
