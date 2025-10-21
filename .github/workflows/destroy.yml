@@ -1,4 +1,4 @@
-name: Destroy Environment Digital Twin
+name: Destroy Environment
 
 on:
   workflow_dispatch:

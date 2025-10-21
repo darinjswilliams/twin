@@ -20,16 +20,31 @@ cd "$(dirname "$0")/../terraform"
 
 # Get AWS Account ID and Region for backend configuration
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-AWS_REGION=${DEFAULT_AWS_REGION:-us-east-2}
+AWS_REGION=${DEFAULT_AWS_REGION:-us-east-1}
 
 # Initialize terraform with S3 backend
 echo "🔧 Initializing Terraform with S3 backend..."
-terraform init -input=false \
-  -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
-  -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
-  -backend-config="region=${AWS_REGION}" \
-  -backend-config="dynamodb_table=twin-terraform-locks" \
-  -backend-config="encrypt=true"
+TF_VERSION=$(terraform version -json | jq -r '.terraform_version')
+echo "🔧 Detected Terraform version: ${TF_VERSION}"
+
+# Use dynamodb_table for older versions; use_lockfile for 1.10+
+if [ "$(printf '%s\n' "1.10.0" "$TF_VERSION" | sort -V | head -n1)" = "1.10.0" ]; then
+  echo "🔧 Using new lockfile-based backend configuration..."
+  terraform init -migrate-state -input=false -no-color \
+    -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
+    -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
+    -backend-config="region=${AWS_REGION}" \
+    -backend-config="use_lockfile=true" \
+    -backend-config="encrypt=true"
+else
+  echo "🔧 Using DynamoDB-based backend configuration..."
+  terraform init -migrate-state -input=false -no-color \
+    -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
+    -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
+    -backend-config="region=${AWS_REGION}" \
+    -backend-config="dynamodb_table=twin-terraform-locks" \
+    -backend-config="encrypt=true"
+fi
 
 # Check if workspace exists
 if ! terraform workspace list | grep -q "$ENVIRONMENT"; then
