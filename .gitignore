@@ -44,5 +44,4 @@ Thumbs.db
 .aws/
 
 #Backent Assest Directiry
-backend/assets/
 backend/scripts/
