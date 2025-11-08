@@ -1,0 +1,48 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.d/
+!terraform.tfvars
+!prod.tfvars
+*.tfvars.secret
+secrets.auto.tfvars
+
+# Lambda packages
+lambda-deployment.zip
+lambda-package/
+
+# Memory storage (contains conversation history)
+memory/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+out/
+.next/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# AWS
+.aws/
+
+#Backent Assest Directiry
+backend/assets/
+backend/scripts/

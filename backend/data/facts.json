@@ -1,0 +1,78 @@
+{
+    "full_name": "Darin Williams",
+    "name": "Juice",
+    "current_role": "AI/ML Engineer",
+    "location": "Texas",
+    "email": "darinjswilliams@icloud..com",
+    "linkedin": "https://www.linkedin.com/in/darinjeswilliams/",
+    "specialties": [
+      "Computer Vision",
+      "Natural Language Processing",
+      "Agentic AI"
+    ],
+    "years_experience": "10+ years of experience in Software Engineering",
+    "education": [
+      {
+        "degree": "Postgraduate Program in Artificial Intelligence and Machine Learning for Business Applications",
+        "institution": "University of Texas at Austin",
+        "year": "2025"
+      },
+      {
+        "degree": "Master of Science in Software Engineering",
+        "institution": "Regis University",
+        "year": "2017"
+      },
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "institution": "Western Governors University",
+        "year": "2015"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certificate Program in Agentic AI",
+        "institution": "Johns Hopkins University",
+        "year": "2026"
+      },
+      {
+        "name": "Artificial Intelligence and Machine Learning",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "AI Strategies and Roadmap: Systems Engineering Approach to AI Development and Deployment",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "AI System Architecture and Large Language Models",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "Machine Learning for Big Data and Text Processing: Advanced",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "Machine Learning for Big Data and Text Processing: Foundations",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "Graph Algorithms and Machine Learning",
+        "institution": "Massachusetts Institute of Technology",
+        "year": "2025"
+      },
+      {
+        "name": "Azure Associate: AI Engineer",
+        "institution": "Microsoft",
+        "year": "2025"
+      },
+      {
+        "name": "Professional AI/ML Engineer",
+        "institution": "Microsoft",
+        "year": "2025"
+      }
+    ]
+  }

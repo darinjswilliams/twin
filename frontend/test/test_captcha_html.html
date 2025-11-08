@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Request Test</title>
+    <!-- Replace YOUR_SITE_KEY with your actual reCAPTCHA site key -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lf56P4rAAAAADbnozxNV0DyyQ312_H8QvYZjUzr"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .captcha-notice {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            display: block;
+        }
+        .debug {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+            display: none;
+        }
+        .debug.show {
+            display: block;
+        }
+        .debug pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Test Resume Request</h1>
+        <p class="subtitle">Testing reCAPTCHA v3 + Rate Limiting</p>
+
+        <form id="resumeForm">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message (optional)</label>
+                <textarea id="message" placeholder="Tell me about your interest..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                Send Request
+            </button>
+
+            <div class="captcha-notice">
+                🔒 Protected by reCAPTCHA v3<br>
+                Check your backend console for detailed logs
+            </div>
+        </form>
+
+        <div id="status" class="status"></div>
+        
+        <div id="debug" class="debug">
+            <strong>Debug Info:</strong>
+            <pre id="debugContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        const RECAPTCHA_SITE_KEY = '6Lf56P4rAAAAADbnozxNV0DyyQ312_H8QvYZjUzr'; // Replace with your actual site key
+        const API_URL = 'http://localhost:8000';
+
+        const form = document.getElementById('resumeForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusDiv = document.getElementById('status');
+        const debugDiv = document.getElementById('debug');
+        const debugContent = document.getElementById('debugContent');
+
+        function showStatus(message, type) {
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function showDebug(data) {
+            debugContent.textContent = JSON.stringify(data, null, 2);
+            debugDiv.classList.add('show');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            showStatus('Getting reCAPTCHA token...', 'loading');
+            debugDiv.classList.remove('show');
+
+            try {
+                // Step 1: Get reCAPTCHA token
+                console.log('Executing reCAPTCHA...');
+                const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+                    action: 'submit_resume'
+                });
+                
+                console.log('reCAPTCHA token received:', token.substring(0, 20) + '...');
+                showStatus('reCAPTCHA verified! Sending request...', 'loading');
+
+                // Step 2: Send to backend
+                const response = await fetch(`${API_URL}/send-resume-request-secure`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    mode: 'cors',  // Explicitly set CORS mode
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        message,
+                        captcha_token: token
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Response:', data);
+
+                if (response.ok) {
+                    showStatus(`✅ ${data.message}`, 'success');
+                    showDebug({
+                        status: 'Success',
+                        captcha_score: data.debug_info?.captcha_score,
+                        rate_limit_remaining: data.debug_info?.rate_limit_remaining,
+                        message: 'Check backend console for full logs'
+                    });
+                    form.reset();
+                } else {
+                    showStatus(`❌ ${data.detail}`, 'error');
+                    showDebug({
+                        status: 'Failed',
+                        status_code: response.status,
+                        error: data.detail
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus(`❌ ${error.message}`, 'error');
+                showDebug({
+                    status: 'Error',
+                    error: error.message,
+                    hint: 'Make sure backend is running on port 8000 and you are accessing this page via http://localhost:3000 (not file://)'
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Request';
+            }
+        });
+
+        // Check if reCAPTCHA loaded
+        window.addEventListener('load', () => {
+            if (typeof grecaptcha === 'undefined') {
+                showStatus('⚠️ reCAPTCHA not loaded. Check your site key.', 'error');
+            } else {
+                console.log('✅ reCAPTCHA loaded successfully');
+                // Check if page is served via HTTP
+                if (window.location.protocol === 'file:') {
+                    showStatus('⚠️ Please serve via HTTP (python -m http.server 3000)', 'error');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
