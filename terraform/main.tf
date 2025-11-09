@@ -319,24 +319,6 @@ resource "aws_iam_role" "terraform_role" {
   })
 }
 
-resource "aws_iam_policy" "route53_read" {
-  name        = "Route53ReadAccess"
-  description = "Allow listing and getting Route53 hosted zones"
-  policy      = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = [
-          "route53:ListHostedZones",
-          "route53:GetHostedZone"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
-}
-
 resource "aws_iam_role_policy_attachment" "attach_route53" {
   role       = aws_iam_role.terraform_role.name
   policy_arn = aws_iam_policy.route53_read.arn
