@@ -69,6 +69,8 @@ jobs:
           ./scripts/deploy.sh ${{ github.event.inputs.environment || 'dev' }}
         env:
           AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          NEXT_PUBLIC_SITE_KEY: ${{ secrets.NEXT_PUBLIC_SITE_KEY }}
+
           TF_VAR_next_public_site_key: ${{secrets.NEXT_PUBLIC_SITE_KEY}}
           TF_VAR_brevo_api_key: ${{secrets.BREVO_API_KEY}}
           TF_VAR_recaptcha_secret_key: ${{secrets.RECAPTCHA_SECRET_KEY}}
