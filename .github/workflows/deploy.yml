@@ -69,6 +69,11 @@ jobs:
           ./scripts/deploy.sh ${{ github.event.inputs.environment || 'dev' }}
         env:
           AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          NEXT_PUBLIC_SITE_KEY: ${{secrets.NEXT_PUBLIC_SITE_KEY}}
+          BREVO_API_KEY: ${{secrets.BREVO_API_KEY}}
+          RECAPTCHA_SECRET_KEY: ${{secrets.RECAPTCH_SECRET_KEY}}
+        
+          
           
       - name: Get Deployment URLs
         id: deploy_outputs
