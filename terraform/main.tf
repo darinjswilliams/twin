@@ -295,33 +295,11 @@ resource "aws_cloudfront_distribution" "main" {
   }
 }
 
-# Optional: Custom domain configuration (only created when use_custom_domain = true)
+# Optional: Custom domain configuration (only created when use_custom_domain = true
 data "aws_route53_zone" "root" {
   count        = var.use_custom_domain ? 1 : 0
   name         = var.root_domain
   private_zone = false
-}
-
-resource "aws_iam_role" "terraform_role" {
-  name = "terraform-route53-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com" # or "ecs.amazonaws.com", "lambda.amazonaws.com", etc.
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "attach_route53" {
-  role       = aws_iam_role.terraform_role.name
-  policy_arn = aws_iam_policy.route53_read.arn
 }
 
 resource "aws_acm_certificate" "site" {
