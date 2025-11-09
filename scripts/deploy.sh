@@ -13,6 +13,7 @@ echo "📦 Building Lambda package..."
 
 # 2. Terraform workspace & apply
 cd terraform
+
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 AWS_REGION=${DEFAULT_AWS_REGION:-us-east-1}
 terraform init -input=false \
@@ -46,8 +47,12 @@ CUSTOM_URL=$(terraform output -raw custom_domain_url 2>/dev/null || true)
 cd ../frontend
 
 # Create production environment file with API URL
-echo "📝 Setting API URL for production..."
-echo "NEXT_PUBLIC_API_URL=$API_URL" > .env.production
+# Create production environment file with API URL and reCAPTCHA key
+echo "📝 Setting environment variables for production..."
+cat > .env.production << EOF
+NEXT_PUBLIC_API_URL=$API_URL
+NEXT_PUBLIC_SITE_KEY=$TF_VAR_next_public_site_key
+EOF
 
 npm install
 npm run build

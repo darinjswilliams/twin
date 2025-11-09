@@ -24,16 +24,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const siteKey = process.env.NEXT_PUBLIC_SITE_KEY;
+
+   // Debug: Log the site key (it will be visible in page source but that's okay for debugging)
+   console.log('🔑 Site Key:', siteKey ? 'LOADED' : 'MISSING');
   
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         {/* Show error if key is missing */}
+         {!siteKey && (
+          <div style={{ background: 'red', color: 'white', padding: '10px' }}>
+            ⚠️ NEXT_PUBLIC_SITE_KEY is not set!
+          </div>
+        )}
+
         {siteKey && (
           <Script
             src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
             strategy="afterInteractive"
+            onLoad={() => console.log('✅ reCAPTCHA loaded')}
+            onError={() => console.error('❌ reCAPTCHA failed to load')}
           />
         )}
         {children}
