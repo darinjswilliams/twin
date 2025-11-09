@@ -44,8 +44,6 @@ export default function RootLayout({
           <Script
             src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
             strategy="afterInteractive"
-            onLoad={() => console.log('✅ reCAPTCHA loaded')}
-            onError={() => console.error('❌ reCAPTCHA failed to load')}
           />
         )}
         {children}
