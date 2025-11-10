@@ -391,16 +391,28 @@ export default function DigitalTwin() {
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
-                    <h4 className="font-semibold mb-2">Azure AI Engineer</h4>
-                    <p className="text-sm text-gray-400">Microsoft</p>
-                  </div>
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
                     <h4 className="font-semibold mb-2">AI Strategies & Roadmap</h4>
                     <p className="text-sm text-gray-400">MIT</p>
                   </div>
                   <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
-                    <h4 className="font-semibold mb-2">Professional AI/ML Engineer</h4>
+                    <h4 className="font-semibold mb-2">AI System Architecture LLM Applications</h4>
+                    <p className="text-sm text-gray-400">MIT</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
+                    <h4 className="font-semibold mb-2">Professional Certicate AI/ML</h4>
+                    <p className="text-sm text-gray-400">MIT</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
+                    <h4 className="font-semibold mb-2">Post Graduate Program AI/ML Business Applications</h4>
+                    <p className="text-sm text-gray-400">University of Texas at Austin</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
+                    <h4 className="font-semibold mb-2">Azure AI Engineer</h4>
                     <p className="text-sm text-gray-400">Microsoft</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-yellow-400 transition-all">
+                    <h4 className="font-semibold mb-2">Professional AI/ML Engineer</h4>
+                    <p className="text-sm text-gray-400">Microsoft & Coursera</p>
                   </div>
                 </div>
               </div>
