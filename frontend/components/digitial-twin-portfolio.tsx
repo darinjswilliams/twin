@@ -41,6 +41,7 @@ export default function DigitalTwin() {
   const [formTimestamp, setFormTimestamp] = useState<number | null>(null);
 
 
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIsTalking(prev => !prev);
@@ -53,6 +54,14 @@ export default function DigitalTwin() {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, showChat]);
+
+    // Set timestamp when form becomes visible
+  useEffect(() => {
+    if (!showResumeModal && formTimestamp === null) {
+      setFormTimestamp(Date.now());
+      console.log('Form opened at:', Date.now());
+    }
+  }, [showResumeModal, formTimestamp]);
 
 
   const handleSendMessage = async () => {
@@ -148,8 +157,15 @@ export default function DigitalTwin() {
     const timeSpent = formTimestamp ? Math.floor((Date.now() - formTimestamp) / 1000) : 0;
     console.log('🕒 Form timestamp:', formTimestamp);
     console.log('🕒 Time spent:', timeSpent, 'seconds');
+  
+    if (timeSpent === 0) {
+      console.error('Invalid timestamp - form_time is 0');
+    }
 
-
+        // Add this before submitting:
+    if (timeSpent === 0 || !formTimestamp) {
+      console.error('Form timestamp not set properly. Detecting Bot');
+    }
 
     if (!formData.name || !formData.email) {
       alert('Please fill in your name and email');
@@ -173,7 +189,7 @@ export default function DigitalTwin() {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
       // Calculate time spent on form (in seconds)
-      const timeSpent = formTimestamp ? Math.floor((Date.now() - formTimestamp) / 1000) : 0;
+      // const timeSpent = formTimestamp ? Math.floor((Date.now() - formTimestamp) / 1000) : 0;
     
 
       const response = await fetch(`${apiUrl}/send-resume-request-secure`, {
