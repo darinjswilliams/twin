@@ -187,9 +187,14 @@ def call_bedrock(conversation: List[Dict], user_message: str) -> str:
         elif error_code == 'AccessDeniedException':
             print(f"Bedrock access denied: {e}")
             raise HTTPException(status_code=403, detail="Access denied to Bedrock model")
+        elif error_code == 'ThrottlingExcepton':
+            print(f'Bedrock throttling exception: {e}')
+            raise HTTPException(status_code=429, detail="Modal quota reached for today. Please retry after the daily reset")
         else:
             print(f"Bedrock error: {e}")
             raise HTTPException(status_code=500, detail=f"Bedrock error: {str(e)}")
+    
+
 
 
 
