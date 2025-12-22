@@ -91,7 +91,7 @@ export default function DigitalTwin() {
               session_id: sessionId || undefined,
           }),
       });
-
+     
       if (!response.ok) throw new Error('Failed to send message');
 
       const data = await response.json();
