@@ -55,7 +55,7 @@ bedrock_client = boto3.client(
 # - amazon.nova-lite-v1:0   (balanced - default)
 # - amazon.nova-pro-v1:0    (most capable, higher cost)
 # Remember the Heads up: you might need to add us. or eu. prefix to the below model id
-BEDROCK_MODEL_ID= os.getenv("BEDROCK_MODEL_ID", "arn:aws:bedrock:us-east-2:472730590621:inference-profile/global.amazon.nova-2-lite-v1:0")
+BEDROCK_MODEL_ID=os.getenv("BEDROCK_MODEL_ID", "us.amazon.nova-2-lite-v1:0")
 
 
 # Memory storage configuration
@@ -166,7 +166,7 @@ def call_bedrock(conversation: List[Dict], user_message: str) -> str:
     try:
         # Call Bedrock using the converse API
         response = bedrock_client.converse(
-            inferenceProfileArn=BEDROCK_MODEL_ID,
+            modelId=BEDROCK_MODEL_ID,
             messages=messages,
             inferenceConfig={
                 "maxTokens": 2000,
