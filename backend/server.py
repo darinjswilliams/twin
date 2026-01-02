@@ -55,7 +55,7 @@ bedrock_client = boto3.client(
 # - amazon.nova-lite-v1:0   (balanced - default)
 # - amazon.nova-pro-v1:0    (most capable, higher cost)
 # Remember the Heads up: you might need to add us. or eu. prefix to the below model id
-BEDROCK_MODEL_ID=os.getenv("BEDROCK_MODEL_ID", "us.amazon.nova-2-lite-v1:0")
+BEDROCK_MODEL_ID=os.getenv("BEDROCK_MODEL_ID", "arn:aws:bedrock:us-east-2:472730590621:inference-profile/global.amazon.nova-2-lite-v1:0")
 
 
 # Memory storage configuration
@@ -151,7 +151,7 @@ def call_bedrock(conversation: List[Dict], user_message: str) -> str:
     })
     
     # Add conversation history (limit to last 10 exchanges to manage context)
-    for msg in conversation[-20:]:  # Last 10 back-and-forth exchanges
+    for msg in conversation[-10:]:  # Last 10 back-and-forth exchanges
         messages.append({
             "role": msg["role"],
             "content": [{"text": msg["content"]}]
@@ -169,7 +169,7 @@ def call_bedrock(conversation: List[Dict], user_message: str) -> str:
             modelId=BEDROCK_MODEL_ID,
             messages=messages,
             inferenceConfig={
-                "maxTokens": 2000,
+                "maxTokens": 256,
                 "temperature": 0.7,
                 "topP": 0.9
             }

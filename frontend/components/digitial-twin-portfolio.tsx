@@ -39,6 +39,7 @@ export default function DigitalTwin() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string>('');
   const [formTimestamp, setFormTimestamp] = useState<number | null>(null);
+  const [showImageModal, setShowImageModal] = useState(false);
 
 
 
@@ -331,7 +332,7 @@ export default function DigitalTwin() {
           </div>
 
           <div className="flex justify-center gap-4 mb-8 flex-wrap">
-            {['about', 'experience', 'certifications', 'projects'].map((section) => (
+            {['about', 'experience', 'certifications', 'projects', 'current'].map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
@@ -385,15 +386,15 @@ export default function DigitalTwin() {
                 <h3 className="text-2xl font-bold mb-6">Professional Experience</h3>
                 <div className="space-y-6">
                   <div className="border-l-4 border-purple-400 pl-4 rounded-r-xl">
-                    <h4 className="text-xl font-semibold">Lead Software Engineer</h4>
-                    <p className="text-gray-400">BlueCross BlueShield of Texas</p>
-                    <p className="text-gray-300 mt-2">Architected microservices 1M+ daily transactions</p>
+                    <h4 className="text-xl font-semibold">Founder</h4>
+                    <p className="text-gray-400">Autonami Ai LLC</p>
+                    <p className="text-gray-300 mt-2">Autonami Ai is building the future of healthcare automation - an intelligent, policy-aware orchestration platform that autonomously manages clinical workflows. Spearheading development of an agentic AI backend for healthcare, combining workflow orchestration with adaptive policy learning</p>
 
                   </div>
                   <div className="border-l-4 border-blue-400 pl-4 rounded-r-xl">
-                    <h4 className="text-xl font-semibold">Senior Software Engineer</h4>
+                    <h4 className="text-xl font-semibold">Lead Software Engineer</h4>
                     <p className="text-gray-400">BlueCross BlueShield of Texas </p>
-                    <p className="text-gray-300 mt-2">Created Reusable ReactJS Components</p>
+                    <p className="text-gray-300 mt-2">Architected microservices 1M+ daily transactions</p>
                   </div>
                 </div>
               </div>
@@ -494,6 +495,25 @@ export default function DigitalTwin() {
                     </a>
                     <p className="text-sm text-gray-400">Agentic RAG</p>
                   </div>
+                </div>
+              </div>
+            )}
+
+            
+            {activeSection === 'current' && (
+              <div className="md:col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+                <h3 className="text-2xl font-bold mb-6">Intelligent, Agentic Clinical Workflow Orchestration Platform</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-purple-400 transition-all group">
+                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                      SaaS Orchestration          
+                    </h4>
+              
+                    <p className="text-sm text-gray-400">Building An autonomous, policy‑aware clinical workflow orchestration platform that automates post‑consultation tasks, coordinates multi‑step clinical actions, and integrates with EHRs, labs, pharmacies, and TEFCA networks — all with full auditability and compliance</p>
+                  </div>
+                  <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-blue-400 transition-all group cursor-pointer" onClick={() => setShowImageModal(true)}>
+                      <img src="/kindrahealthsaas.png" alt="KindraHealthSaaS" className="w-full h-full object-cover rounded-xl" />
+                  </div> 
                 </div>
               </div>
             )}
@@ -703,6 +723,29 @@ export default function DigitalTwin() {
             <div className="captcha-notice">
                 🔒 Protected by reCAPTCHA
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Modal */}
+      {showImageModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowImageModal(false)}
+          ></div>
+          <div className="relative z-10 max-w-6xl max-h-[90vh] w-full">
+            <button
+              onClick={() => setShowImageModal(false)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <img
+              src="/kindrahealthsaas.png"
+              alt="KindraHealthSaaS - Full Size"
+              className="w-full h-full object-contain rounded-xl"
+            />
           </div>
         </div>
       )}
