@@ -386,8 +386,9 @@ export default function DigitalTwin() {
                 <h3 className="text-2xl font-bold mb-6">Professional Experience</h3>
                 <div className="space-y-6">
                   <div className="border-l-4 border-purple-400 pl-4 rounded-r-xl">
-                    <h4 className="text-xl font-semibold">Founder</h4>
+                    <h4 className="text-xl font-semibold">Founder/Princiapal Engineer</h4>
                     <p className="text-gray-400">Autonami Ai LLC</p>
+                    <p className="text-gray-400">(Early-stage AI Startup)</p>
                     <p className="text-gray-300 mt-2">Autonami Ai is building the future of healthcare automation - an intelligent, policy-aware orchestration platform that autonomously manages clinical workflows. Spearheading development of an agentic AI backend for healthcare, combining workflow orchestration with adaptive policy learning</p>
 
                   </div>

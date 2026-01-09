@@ -32,7 +32,7 @@ app = FastAPI()
 
 
 # Configure CORS
-origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+origins = os.getenv("CORS_ORIGINS", "http://localhost:3001").split(",")
 MIN_CAPTCHA_SCORE = os.getenv("MIN_CAPTCHA_SCORE")
 
 app.add_middleware(
@@ -55,7 +55,7 @@ bedrock_client = boto3.client(
 # - amazon.nova-lite-v1:0   (balanced - default)
 # - amazon.nova-pro-v1:0    (most capable, higher cost)
 # Remember the Heads up: you might need to add us. or eu. prefix to the below model id
-BEDROCK_MODEL_ID=os.getenv("BEDROCK_MODEL_ID", "arn:aws:bedrock:us-east-2:472730590621:inference-profile/global.amazon.nova-2-lite-v1:0")
+BEDROCK_MODEL_ID=os.getenv("BEDROCK_MODEL_ID", "global.amazon.nova-2-lite-v1:0")
 
 
 # Memory storage configuration
@@ -147,7 +147,7 @@ def call_bedrock(conversation: List[Dict], user_message: str) -> str:
     # Add system prompt as first user message (Bedrock convention)
     messages.append({
         "role": "user", 
-        "content": [{"text": f"System: {prompt()}"}]
+        "content": [{"text": prompt()}]
     })
     
     # Add conversation history (limit to last 10 exchanges to manage context)
@@ -261,9 +261,19 @@ async def root():
 @app.get("/health")
 async def health_check():
       return {
-        "status": "healthy", 
+        "status": "healthy",
         "use_s3": USE_S3,
         "bedrock_model": BEDROCK_MODEL_ID
+    }
+
+
+@app.get("/metrics")
+async def metrics():
+    """Basic metrics endpoint for monitoring tools"""
+    return {
+        "status": "ok",
+        "storage": "S3" if USE_S3 else "local",
+        "model": BEDROCK_MODEL_ID
     }
 
 
