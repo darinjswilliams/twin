@@ -496,6 +496,20 @@ export default function DigitalTwin() {
                     </a>
                     <p className="text-sm text-gray-400">Agentic RAG</p>
                   </div>
+                  <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-blue-400 transition-all group">
+                  <a
+                      href='https://insurance-agent-a8gsjomd7dcmvsvjijhz73.streamlit.app'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group'
+                      >
+                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                       Insurance Claim Processing
+                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h4>
+                    </a>
+                    <p className="text-sm text-gray-400">Agenti AI - LangGraph, RAG</p>
+                  </div>
                 </div>
               </div>
             )}
