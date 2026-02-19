@@ -192,7 +192,7 @@ export default function DigitalTwin() {
       // Calculate time spent on form (in seconds)
       // const timeSpent = formTimestamp ? Math.floor((Date.now() - formTimestamp) / 1000) : 0;
     
-
+    
       const response = await fetch(`${apiUrl}/send-resume-request-secure`, {
         method: 'POST',
         headers: {
