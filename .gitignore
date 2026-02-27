@@ -8,6 +8,7 @@ terraform.tfstate.d/
 !prod.tfvars
 *.tfvars.secret
 secrets.auto.tfvars
+terraform/recovery.sh
 
 # Lambda packages
 lambda-deployment.zip
@@ -45,3 +46,6 @@ Thumbs.db
 
 #Backent Assest Directiry
 backend/scripts/
+
+frontend/frontend@0.1.0
+frontend/next
