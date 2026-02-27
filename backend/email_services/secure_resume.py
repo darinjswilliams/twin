@@ -280,7 +280,7 @@ def send_resume_to_user(name: str, email: str, pre_assigned_url: str) -> bool:
         response = requests.post(BREVO_API_URL, json=payload, headers=headers)
         return response.status_code in (200, 201, 202)
     except Exception as e:
-        print("Error sending email - send resume to user:", str(e))
+        print("Error sending email - send resumeg:", str(e))
         return False
 
 
